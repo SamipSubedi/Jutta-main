@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shoesfyp2/network/shoes_model.dart';
 
 import '../constants.dart';
+import 'cart_model.dart';
 
 getShoesList({String cityName}) async {
   var finalUrl = Constants.apiURL +
@@ -25,4 +26,13 @@ getShoesList({String cityName}) async {
   } else {
     throw Exception("Error getting Data from Database");
   }
+}
+
+addtoCart(String itemID, userID) async {
+  var finalUrl = "${Constants.apiURL}add_to_cart";
+
+  final response =
+      await http.post(finalUrl, body: {"item_id": itemID, "user_id": userID});
+  print(response.body);
+  print("URL: ${Uri.encodeFull(finalUrl)}");
 }

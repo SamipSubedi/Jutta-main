@@ -34,11 +34,12 @@ class _ProductPageState extends State<ProductPage> {
   String _selectedProductSize = "0";
 
   Future _addToCart() {
-    return _firebaseServices.usersRef
+/*     return _firebaseServices.usersRef
         .doc(_firebaseServices.getUserId())
         .collection("Cart")
         .doc(widget.productId)
-        .set({"size": _selectedProductSize});
+        .set({"size": _selectedProductSize}); */
+    addtoCart(widget.productId, _firebaseServices.getUserId());
   }
 
   Future _addToSaved() {
