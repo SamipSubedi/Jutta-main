@@ -29,7 +29,7 @@ getShoesList({String cityName}) async {
 }
 
 addtoCart(String itemID, userID) async {
-  var finalUrl = "${Constants.apiURL}add_to_card";
+  var finalUrl = "${Constants.apiURL}add_to_cart";
 
   final response =
       await http.post(finalUrl, body: {"item_id": itemID, "user_id": userID});
