@@ -2,7 +2,7 @@ import 'package:shoesfyp2/network/network.dart';
 import 'package:shoesfyp2/services/firebase_services.dart';
 import 'package:shoesfyp2/tabs/home_tab.dart';
 import 'package:shoesfyp2/tabs/saved_tab.dart';
-import 'package:shoesfyp2/tabs/search_tab.dart';
+import 'package:shoesfyp2/tabs/news_tab.dart';
 import 'package:shoesfyp2/widgets/bottom_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:shoesfyp2/widgets/main_drawer.dart';
@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               },
               children: [
                 HomeTab(),
-                SearchTab(),
+                NewsTab(),
                 SavedTab(),
               ],
             ),
