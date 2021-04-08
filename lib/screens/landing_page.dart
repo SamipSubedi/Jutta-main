@@ -62,8 +62,8 @@ class LandingPage extends StatelessWidget {
                       children: [
                         Center(
                           child: Container(
-                            height: 100,
-                            width: 100,
+                            height: 200,
+                            width: 200,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     fit: BoxFit.contain,
@@ -86,9 +86,26 @@ class LandingPage extends StatelessWidget {
         // Connecting to Firebase - Loading
         return Scaffold(
           body: Center(
-            child: Text(
-              "Initialization App...",
-              style: Constants.regularHeading,
+            child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                               Center(
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.contain,
+                                    image: AssetImage("assets/images/logo.png"))),
+                          ),
+                        ),
+                              Text(
+                "Initialization App...",
+                style: Constants.regularHeading,
+              ),
+                            ],
+                          ),
             ),
           ),
         );

@@ -99,7 +99,7 @@ class _CartPageState extends State<CartPage> {
                                   ),
                                 ),
                                 Text(
-                                  "Size - ${responsedata[i].size}",
+                                  "Size - ${responsedata[i].shoe_size}",
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       color: Colors.black,

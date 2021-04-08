@@ -105,11 +105,17 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage("assets/images/logo.png"))),
                   padding: EdgeInsets.only(
                     top: 24.0,
                   ),
                   child: Text(
-                    "Welcome to जुत्ता,\nLogin to your account",
+                    "Welcome to",
                     textAlign: TextAlign.center,
                     style: Constants.boldHeading,
                   ),

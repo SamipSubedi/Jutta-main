@@ -36,7 +36,7 @@ class _HomeTabState extends State<HomeTab> {
                     },
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               },
             ),

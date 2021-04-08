@@ -106,14 +106,23 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.only(
-                    top: 24.0,
-                  ),
-                  child: Text(
-                    "Create A New Account",
-                    textAlign: TextAlign.center,
-                    style: Constants.boldHeading,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage("assets/images/logo.png"))),
+                  /*     padding: EdgeInsets.only(
+                      top: 24.0,
+                    ), */
+                    child: Text(
+                      "Create A New Account",
+                      textAlign: TextAlign.center,
+                      style: Constants.boldHeading,
+                    ),
                   ),
                 ),
                 Column(

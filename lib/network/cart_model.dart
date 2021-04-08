@@ -10,6 +10,7 @@ class CartModel {
   String imageUrl;
   String size;
   String price;
+  String shoe_size;
   CartModel(
       {this.created_id,
       this.item_id,
@@ -21,7 +22,8 @@ class CartModel {
       this.description,
       this.imageUrl,
       this.size,
-      this.price});
+      this.price,
+      this.shoe_size});
 
   CartModel.fromJson(Map<String, dynamic> json) {
     created_id = json['created_id'];
@@ -35,6 +37,7 @@ class CartModel {
     imageUrl = json['image_url'];
     size = (json['size']).toString();
     price = json['price'];
+    shoe_size = json['shoe_size'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +53,7 @@ class CartModel {
     data['ímage_url'] = this.imageUrl;
     data['size'] = this.size;
     data['price'] = this.price;
+    data['shoe_size'] = this.shoe_size;
     return data;
   }
 }

@@ -40,7 +40,7 @@ class _NewsTabState extends State<NewsTab> {
                     },
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
               },
             ),
