@@ -17,7 +17,7 @@ class _HomeTabState extends State<HomeTab> {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: EdgeInsets.only(top: 80),
             child: FutureBuilder(
               future: getShoesList(),
               builder: (context, snapshot) {

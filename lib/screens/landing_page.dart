@@ -56,9 +56,26 @@ class LandingPage extends StatelessWidget {
               // Checking the auth state - Loading
               return Scaffold(
                 body: Center(
-                  child: Text(
-                    "Checking Authentication...",
-                    style: Constants.regularHeading,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.contain,
+                                    image: AssetImage("assets/images/logo.png"))),
+                          ),
+                        ),
+                        Text(
+                          "Checking Authentication...",
+                          style: Constants.regularHeading,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

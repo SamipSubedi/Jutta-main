@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:shoesfyp2/network/cart_model.dart';
 import 'package:shoesfyp2/network/shoes_model.dart';
 
 import '../constants.dart';
@@ -55,7 +56,20 @@ getCartList(String userID) async {
   var finalUrl = "${Constants.apiURL}view_cart/$userID";
 
   final response = await http.get(finalUrl);
-  print(response.body);
+  print("URL: ${Uri.encodeFull(finalUrl)}");
+  if (response.statusCode == 200) {
+    var extractedData = json.decode(response.body);
+    print(response.body);
+    List<CartModel> loadedData = [];
+
+    extractedData.asMap().forEach((_, data) {
+      loadedData.add(CartModel.fromJson(data));
+    });
+    print(loadedData);
+    return loadedData;
+  } else {
+    throw Exception("Error getting Data from Database");
+  }
 }
 
 getNewsList({String cityName}) async {

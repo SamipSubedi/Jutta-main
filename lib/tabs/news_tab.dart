@@ -21,7 +21,7 @@ class _NewsTabState extends State<NewsTab> {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: EdgeInsets.only(top: 100),
             child: FutureBuilder(
               future: getNewsList(),
               builder: (context, snapshot) {
