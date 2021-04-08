@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:shoesfyp2/network/cart_model.dart';
 import 'package:shoesfyp2/screens/product_page.dart';
 import 'package:shoesfyp2/services/firebase_services.dart';
 import 'package:shoesfyp2/widgets/custom_action_bar.dart';
@@ -12,6 +14,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -24,11 +27,8 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       body: Stack(
         children: [
-          FutureBuilder<QuerySnapshot>(
-            future: _firebaseServices.usersRef
-                .doc(_firebaseServices.getUserId())
-                .collection("Cart")
-                .get(),
+          FutureBuilder(
+            future: getCartList(_firebaseServices.getUserId()),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
@@ -39,114 +39,79 @@ class _CartPageState extends State<CartPage> {
               }
 
               // Collection Data ready to display
-              if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
                 // Display the data inside a list view
-                return ListView(
+                List<CartModel> responsedata = snapshot.data;
+                return ListView.builder(
                   padding: EdgeInsets.only(
                     top: 108.0,
                     bottom: 12.0,
                   ),
-                  children: snapshot.data.docs.map((document) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProductPage(
-                                productId: document.id,
+                  itemCount: responsedata.length,
+                  itemBuilder: (context, i) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 24.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 90,
+                            height: 90,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                "${responsedata[i].imageUrl}",
+                                fit: BoxFit.cover,
                               ),
-                            ));
-                      },
-                      child: FutureBuilder(
-                        future: _firebaseServices.productsRef
-                            .doc(document.id)
-                            .get(),
-                        builder: (context, productSnap) {
-                          if (productSnap.hasError) {
-                            return Container(
-                              child: Center(
-                                child: Text("${productSnap.error}"),
-                              ),
-                            );
-                          }
-
-                          if (productSnap.connectionState ==
-                              ConnectionState.done) {
-                            Map _productMap = productSnap.data.data();
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16.0,
-                                horizontal: 24.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 90,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        "${_productMap['images'][0]}",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      left: 16.0,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${_productMap['name']}",
-                                          style: TextStyle(
-                                              fontSize: 18.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 4.0,
-                                          ),
-                                          child: Text(
-                                            "\$${_productMap['price']}",
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ),
-                                        Text(
-                                          "Size - ${document.data()['size']}",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-
-                          return Container(
-                            child: Center(
-                              child: CircularProgressIndicator(),
                             ),
-                          );
-                        },
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 16.0,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 200,
+                                  child: AutoSizeText(
+                                    "${responsedata[i].name}",
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 4.0,
+                                  ),
+                                  child: Text(
+                                    "\$${responsedata[i].price}",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Theme.of(context).accentColor,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Text(
+                                  "Size - ${responsedata[i].size}",
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     );
-                  }).toList(),
+                  },
                 );
               }
 
