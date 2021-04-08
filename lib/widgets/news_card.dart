@@ -26,12 +26,11 @@ class NewsCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        height: 350.0,
         margin: EdgeInsets.symmetric(
           vertical: 12.0,
           horizontal: 24.0,
         ),
-        child: Stack(
+        child: Column(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
@@ -40,34 +39,29 @@ class NewsCard extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: AutoSizeText(
-                        "Brand - " + title,
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.w600),
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: AutoSizeText(
+                      "Brand - " + title,
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Theme.of(context).accentColor,
+                          fontWeight: FontWeight.w600),
                     ),
-                    Container(
-                      width: double.infinity,
-                      child: AutoSizeText(
-                        description,
-                        style: Constants.regularHeading,
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: AutoSizeText(
+                      description,
+                      style: Constants.normal,
+                    ),
+                  )
+                ],
               ),
             )
           ],

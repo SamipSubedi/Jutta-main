@@ -9,8 +9,8 @@ class FirebaseServices {
     return _firebaseAuth.currentUser.uid;
   }
   
-  //String userId = _firebaseServices.getUserId();
-  //String Uri.parse(apiURL+"/${getUserId()}")
+  //String userId = _firebaseServices.getuser_id();
+  //String Uri.parse(apiURL+"/${getuseid()}")
 
   final CollectionReference productsRef =
       FirebaseFirestore.instance.collection("Products");

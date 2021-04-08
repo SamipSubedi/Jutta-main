@@ -39,7 +39,7 @@ class _ProductPageState extends State<ProductPage> {
         .collection("Cart")
         .doc(widget.productId)
         .set({"size": _selectedProductSize}); */
-    addtoCart(widget.productId, _firebaseServices.getUserId());
+    addtoCart(widget.productJsonData.id, _firebaseServices.getUserId());
   }
 
   Future _addToSaved() {

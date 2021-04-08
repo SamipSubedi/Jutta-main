@@ -3,6 +3,7 @@ import 'package:shoesfyp2/services/firebase_services.dart';
 import 'package:shoesfyp2/widgets/custom_action_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../network/network.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -11,6 +12,12 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   FirebaseServices _firebaseServices = FirebaseServices();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCartList(_firebaseServices.getUserId());
+  }
 
   @override
   Widget build(BuildContext context) {

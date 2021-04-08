@@ -16,7 +16,7 @@ class ShoesModel {
       this.price});
 
   ShoesModel.fromJson(Map<String, dynamic> json) {
-    id = json[id];
+    id = json['id'];
     name = json['name'];
     description = json['description'];
     imageUrl = json['image_url'];
