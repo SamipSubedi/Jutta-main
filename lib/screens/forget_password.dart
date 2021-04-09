@@ -32,7 +32,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
-                    child: Form(
+                  child: Form(
                   key: _formkey,
                   child: TextFormField(
                     textAlign: TextAlign.center,
