@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:shoesfyp2/network/cart_model.dart';
+import 'package:shoesfyp2/network/save_model.dart';
 import 'package:shoesfyp2/network/shoes_model.dart';
 
 import '../constants.dart';
@@ -64,6 +65,47 @@ getCartList(String userID) async {
 
     extractedData.asMap().forEach((_, data) {
       loadedData.add(CartModel.fromJson(data));
+    });
+    print(loadedData);
+    return loadedData;
+  } else {
+    throw Exception("Error getting Data from Database");
+  }
+}
+
+addtoSave(String itemID, userID) async {
+  var finalUrl = "${Constants.apiURL}add_to_save";
+  print("ITEM ID: $itemID");
+  print("userID $userID");
+  print("URL: $finalUrl");
+  // {"item_id": itemID, "user_id": userID.toString()}
+  // var uri = Uri.encodeFull('http://{{api_url}}/account/authenticate');
+  var response = await http.post(finalUrl,
+      body: jsonEncode({"item_id": itemID, "user_id": userID.toString()}),
+      headers: {HttpHeaders.contentTypeHeader: " application/json"});
+
+//Here you get the 308 error.
+
+  final getResponse = await http.post(response.headers["location"],
+      body: jsonEncode({"item_id": itemID, "user_id": userID.toString()}),
+      headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+      });
+  print(getResponse.body);
+}
+
+getSaveList(String userID) async {
+  var finalUrl = "${Constants.apiURL}view_save/$userID";
+
+  final response = await http.get(finalUrl);
+  print("URL: ${Uri.encodeFull(finalUrl)}");
+  if (response.statusCode == 200) {
+    var extractedData = json.decode(response.body);
+    print(response.body);
+    List<SaveModel> loadedData = [];
+
+    extractedData.asMap().forEach((_, data) {
+      loadedData.add(SaveModel.fromJson(data));
     });
     print(loadedData);
     return loadedData;

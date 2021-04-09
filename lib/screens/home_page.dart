@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 HomeTab(),
                 NewsTab(),
-                SavedTab(),
+                SavePage(),
               ],
             ),
           ),

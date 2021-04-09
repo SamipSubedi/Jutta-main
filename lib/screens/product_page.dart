@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:rating_bar/rating_bar.dart';
 import 'package:shoesfyp2/constants.dart';
 import 'package:shoesfyp2/network/network.dart';
 import 'package:shoesfyp2/network/shoes_model.dart';
@@ -8,6 +9,7 @@ import 'package:shoesfyp2/widgets/custom_action_bar.dart';
 import 'package:shoesfyp2/widgets/image_swipe.dart';
 import 'package:shoesfyp2/widgets/product_size.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 //class ProductPage extends StatefulWidget {
 //final String productId;
@@ -43,11 +45,12 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future _addToSaved() {
-    return _firebaseServices.usersRef
-        .doc(_firebaseServices.getUserId())
-        .collection("Saved")
-        .doc(widget.productId)
-        .set({"size": _selectedProductSize});
+    // return _firebaseServices.usersRef
+    //     .doc(_firebaseServices.getUserId())
+    //     .collection("Saved")
+    //     .doc(widget.productId)
+    //     .set({"size": _selectedProductSize});
+    addtoSave(widget.productJsonData.id, _firebaseServices.getUserId());
   }
 
   final SnackBar _snackBar = SnackBar(
@@ -104,6 +107,20 @@ class _ProductPageState extends State<ProductPage> {
                           horizontal: 24.0,
                         ),
                         child: Text(
+                          "People also buy - ${widget.productJsonData.items}",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                          horizontal: 24.0,
+                        ),
+                        child: Text(
                           "\$${widget.productJsonData.price}",
                           style: TextStyle(
                             fontSize: 18.0,
@@ -139,6 +156,28 @@ class _ProductPageState extends State<ProductPage> {
                         onSelected: (size) {
                           _selectedProductSize = size;
                         },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                          horizontal: 24.0,
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Rating :",
+                              style: Constants.regularDarkText,
+                            ),
+                            RatingBar.readOnly(
+                              initialRating:
+                                  double.parse(widget.productJsonData.rating),
+                              isHalfAllowed: true,
+                              halfFilledIcon: Icons.star_half,
+                              filledIcon: Icons.star,
+                              emptyIcon: Icons.star_border,
+                            ),
+                          ],
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(24.0),
