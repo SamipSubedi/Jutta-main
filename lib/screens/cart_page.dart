@@ -5,6 +5,7 @@ import 'package:shoesfyp2/services/firebase_services.dart';
 import 'package:shoesfyp2/widgets/custom_action_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 import '../network/network.dart';
 
 class CartPage extends StatefulWidget {
@@ -20,6 +21,45 @@ class _CartPageState extends State<CartPage> {
     // TODO: implement initState
     super.initState();
     getCartList(_firebaseServices.getUserId());
+    String stripeKey =
+        "pk_test_51IeKCzAAFPfMtoIQu5gfX9GbRBL5oyyDeue2Xp5Dp75D0ido7e8NZn8ROFot7vuzlWa6DY3oDkedCKIKAeYoYIZh00jCeqBicM";
+    print("StripeKey:" + stripeKey);
+    StripePayment.setOptions(
+      StripeOptions(
+          publishableKey: stripeKey,
+          androidPayMode: 'live',
+          merchantId:
+              "sk_test_51IeKCzAAFPfMtoIQT2ao7buSEQZ7wcTB8sefSNh6yMeXQXatqEe8VGM0TZrMFCStEkBxOi5mEydXYWt4ADdyYjwG009ckumuTw"),
+    );
+  }
+
+  payWithStripe() {
+    // StripePayment.paymentRequestWithCardForm(
+    //   CardFormPaymentRequest(),
+
+    StripePayment.paymentRequestWithNativePay(
+      applePayOptions: ApplePayPaymentOptions(
+        countryCode: 'DE',
+        currencyCode: 'EUR',
+        items: [
+          ApplePayItem(
+            label: 'Test',
+            amount: '27',
+          )
+        ],
+      ),
+      androidPayOptions: AndroidPayPaymentRequest(
+        totalPrice: "200",
+        currencyCode: "AUD",
+      ),
+    ).then((paymentMethod) {
+      print(paymentMethod);
+      setState(() {
+        // _paymentMethod = paymentMethod;
+      });
+    }).catchError(() {
+      print("error");
+    });
   }
 
   @override
@@ -126,7 +166,25 @@ class _CartPageState extends State<CartPage> {
           CustomActionBar(
             hasBackArrrow: true,
             title: "Cart",
-          )
+          ),
+          InkWell(
+            onTap: () {
+              payWithStripe();
+            },
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.all(20.0),
+              color: Colors.black,
+              height: 100,
+              child: Center(
+                child: Text(
+                  "Purchase",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

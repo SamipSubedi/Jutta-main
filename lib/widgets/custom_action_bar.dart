@@ -1,3 +1,4 @@
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:shoesfyp2/constants.dart';
 import 'package:shoesfyp2/screens/cart_page.dart';
 import 'package:shoesfyp2/services/firebase_services.dart';
@@ -79,38 +80,20 @@ class CustomActionBar extends StatelessWidget {
                     builder: (context) => CartPage(),
                   ));
             },
-            child: Container(
-              width: 42.0,
-              height: 42.0,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              alignment: Alignment.center,
-              child: StreamBuilder(
-                stream: _usersRef
-                    .doc(_firebaseServices.getUserId())
-                    .collection("Cart")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  int _totalItems = 0;
-
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    List _documents = snapshot.data.docs;
-                    _totalItems = _documents.length;
-                  }
-
-                  return Text(
-                    "$_totalItems" ?? "0",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              ),
-            ),
+            child: Icon(FontAwesome.cart_arrow_down,
+            size: 40,),
+            // child: Container(
+            //   width: 42.0,
+            //   height: 42.0,
+            //   decoration: BoxDecoration(
+            //       // color: Colors.black,
+            //       borderRadius: BorderRadius.circular(8.0),
+            //       image: DecorationImage(
+            //           image: AssetImage(
+            //         "assets/images/tab_cart.png",
+            //       ))),
+            //   alignment: Alignment.center,
+            // ),
           )
         ],
       ),
