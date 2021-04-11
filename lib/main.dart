@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     pushNotificationService.initialise();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "JUTTA",
       theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(
             Theme.of(context).textTheme,
