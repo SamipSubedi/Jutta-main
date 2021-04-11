@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyHomePage(),
+      //drawer: MyHomePage(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

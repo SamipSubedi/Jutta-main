@@ -24,6 +24,8 @@ class _CartPageState extends State<CartPage> {
     String stripeKey =
         "pk_test_51IeKCzAAFPfMtoIQu5gfX9GbRBL5oyyDeue2Xp5Dp75D0ido7e8NZn8ROFot7vuzlWa6DY3oDkedCKIKAeYoYIZh00jCeqBicM";
     print("StripeKey:" + stripeKey);
+    String currentSecretKey =
+        "sk_test_51IeKCzAAFPfMtoIQT2ao7buSEQZ7wcTB8sefSNh6yMeXQXatqEe8VGM0TZrMFCStEkBxOi5mEydXYWt4ADdyYjwG009ckumuTw";
     StripePayment.setOptions(
       StripeOptions(
           publishableKey: stripeKey,
@@ -33,29 +35,27 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  payWithStripe() {
-    // StripePayment.paymentRequestWithCardForm(
-    //   CardFormPaymentRequest(),
-
-    StripePayment.paymentRequestWithNativePay(
-      applePayOptions: ApplePayPaymentOptions(
-        countryCode: 'DE',
-        currencyCode: 'EUR',
-        items: [
-          ApplePayItem(
-            label: 'Test',
-            amount: '27',
-          )
-        ],
-      ),
-      androidPayOptions: AndroidPayPaymentRequest(
-        totalPrice: "200",
-        currencyCode: "AUD",
-      ),
-    ).then((paymentMethod) {
-      print(paymentMethod);
+  var _paymentMethod;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  payWithStripe() async {
+    StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
+        .then((paymentMethod) {
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(content: Text('Received ${paymentMethod.id}')));
       setState(() {
-        // _paymentMethod = paymentMethod;
+        _paymentMethod = paymentMethod;
+      });
+      StripePayment.confirmPaymentIntent(
+        PaymentIntent(
+          clientSecret:
+              "pk_test_51IeKCzAAFPfMtoIQu5gfX9GbRBL5oyyDeue2Xp5Dp75D0ido7e8NZn8ROFot7vuzlWa6DY3oDkedCKIKAeYoYIZh00jCeqBicM",
+          paymentMethodId: _paymentMethod.id,
+        ),
+      ).then((paymentIntent) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text('Received ${paymentIntent.paymentIntentId}')));
+      }).catchError(() {
+        print("Error");
       });
     }).catchError(() {
       print("error");
@@ -65,6 +65,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: [
           FutureBuilder(
